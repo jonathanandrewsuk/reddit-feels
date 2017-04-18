@@ -12,16 +12,20 @@ def parse(filename)
       #binding.pry
     words = comment_hash["body"].split
     words.each do |word|
-      if Word.exists?(['name LIKE ?', "%#{word}%"])
-        # associate word with comment
+      # binding.pry
+      if Word.exists?(['word LIKE ?',"%#{word}%"])
+        word_object = Word.find_by(['word LIKE ?',"%#{word}%"])# associate word with comment
+        binding.pry
       else
-        Word.create({word: word})
+        word_object = Word.create(word: word)
       # if word not in table, create/insert word
       end
+      WordComment.create(word_id: word_object.id, comment_id: comment.id)
     end
+
   end
 end
 
-#binding.pry
+# binding.pry
 
 # "Gello"

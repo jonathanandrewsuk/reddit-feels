@@ -1,9 +1,9 @@
 require 'active_record'
 
-task :environment do
+
   ENV["ACTIVE_RECORD_ENV"] ||= "development"
   require_relative './config/environment'
-end
+
 
 include ActiveRecord::Tasks
 DatabaseTasks.db_dir = 'db'
@@ -20,17 +20,13 @@ load 'active_record/railties/databases.rake'
 #   load_seed
 # end
 
-task :console => :environment do
-  Pry.start
-end
 
-# task :search => :environment do
-#   puts "Hello welcome to this thing"
-#   puts "Please enter a word"
-#   word = gets.chomp
-#   word_object = Word.find_by(word: "#{word}")
-#   word_object.comments.each_with_index do |comment, index|
-#     puts "Comment #{index+1}"
-#     puts comment[:body]
-#   end
-end
+
+  puts "Hello welcome to this thing"
+  puts "Please enter a word"
+  word = gets.chomp
+  word_object = Word.find_by(word: "#{word}")
+  word_object.comments.each_with_index do |comment, index|
+    puts "Comment #{index+1}"
+    puts comment[:body]
+  end
