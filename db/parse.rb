@@ -3,7 +3,9 @@ require "pry"
 require "json"
 
 def parse
-  comments_arr = JSON.read('comments.json')
-
-  comments_arr
+  JSON.parse('./db/reddit-json/five_comments.json')
 end
+
+binding.pry
+
+"Gello"
