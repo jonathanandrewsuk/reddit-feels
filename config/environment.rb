@@ -1,13 +1,16 @@
 require 'bundler/setup'
-Bundler.require
 
 require 'rake'
 require 'active_record'
 require 'yaml/store'
 require 'ostruct'
 require 'date'
+require 'pry'
 
-DBNAME = "reddit_feels"
+Bundler.require
+
+
+DBNAME = "word_associations"
 
 Dir[File.join(File.dirname(__FILE__), "../app/models", "*.rb")].each {|f| require f}
 Dir[File.join(File.dirname(__FILE__), "../lib/support", "*.rb")].each {|f| require f}
@@ -18,3 +21,5 @@ DB = ActiveRecord::Base.connection
 if ENV["ACTIVE_RECORD_ENV"] == "test"
   ActiveRecord::Migration.verbose = false
 end
+
+# require_relative '../db/seeds.rb'

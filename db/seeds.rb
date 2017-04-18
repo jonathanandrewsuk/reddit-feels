@@ -1,13 +1,10 @@
-require "pry"
+# require "pry"
 
 require_relative './parse.rb'
-require_relative './comments.rb'
 
-comments_arr = parse
 
-comments_arr.shift
-
-# create new instances of guest class through parsed CSV file
-comments_arr.each { |comment|
-  Guest.new(body: comment[0], created_utc: comment[1], author: comment[2])
-}
+filename = './db/reddit-json/five_comments.json'
+# should include this in parse body
+# parse(filename).each do |comment_hash| # returns an array of comment hashes
+parse(filename)
+# binding.pry
