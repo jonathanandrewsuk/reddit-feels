@@ -7,6 +7,7 @@ require 'ostruct'
 require 'date'
 require 'pry'
 
+
 Bundler.require
 
 
@@ -22,4 +23,4 @@ if ENV["ACTIVE_RECORD_ENV"] == "test"
   ActiveRecord::Migration.verbose = false
 end
 
-# require_relative '../db/seeds.rb'
+# require_relative '../db/stopwords.rb'

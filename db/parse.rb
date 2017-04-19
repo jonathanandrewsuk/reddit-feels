@@ -1,5 +1,6 @@
 
 require "json"
+require_relative '../db/stopwords.rb'
 
 def find_or_create_by_entries_from_json(filename)
   File.open(filename).each do |line|
@@ -23,7 +24,8 @@ def create_comment_from_hash(comment_hash)
 end
 
 def create_words_from_hash(comment_hash)
-  words = comment_hash["body"].split
+  raw_words = comment_hash["body"].split
+  words = raw_words.reject { |a| Stopwords.all.include?(a) }
   find_or_create_by_word(words)
 end
 
@@ -32,8 +34,10 @@ def find_or_create_by_word(words)
   words.collect do |word|
     if Word.exists?(['word LIKE ?',"#{word}"])
       Word.find_by(['word LIKE ?',"#{word}"])
+    else
       Word.create(word: word)
     end
+  end
 end
 
 def associate_words_and_comment(words, comment)
