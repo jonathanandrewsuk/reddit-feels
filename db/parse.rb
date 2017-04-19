@@ -1,31 +1,43 @@
 
 require "json"
 
-def parse(filename)
-  File.open(filename).collect do |line|
-    comment_hash = JSON.parse(line)
-    comment = Comment.create({
-      body: comment_hash["body"],
-      created_utc: comment_hash["created_utc"],
-      author: comment_hash["author"]
-      }) # do this for every new row in database
-      #binding.pry
-    words = comment_hash["body"].split
-    words.each do |word|
-      # binding.pry
-      if Word.exists?(['word LIKE ?',"%#{word}%"])
-        word_object = Word.find_by(['word LIKE ?',"%#{word}%"])# associate word with comment
-        binding.pry
-      else
-        word_object = Word.create(word: word)
-      # if word not in table, create/insert word
-      end
-      WordComment.create(word_id: word_object.id, comment_id: comment.id)
-    end
-
+def find_or_create_by_entries_from_json(filename)
+  File.open(filename).each do |line|
+    parse_json_line(line)
   end
 end
 
-# binding.pry
+def parse_json_line(line)
+  comment_hash = JSON.parse(line)
+  comment = create_comment_from_hash(comment_hash)
+  words = create_words_from_hash(comment_hash)
+  associate_words_and_comment(words, comment)
+end
 
-# "Gello"
+def create_comment_from_hash(comment_hash)
+  Comment.create({
+    body: comment_hash["body"],
+    created_utc: comment_hash["created_utc"],
+    author: comment_hash["author"]
+  })
+end
+
+def create_words_from_hash(comment_hash)
+  words = comment_hash["body"].split
+  find_or_create_by_word(words)
+end
+
+def find_or_create_by_word(words)
+  #todo : filter stop words
+  words.collect do |word|
+    if Word.exists?(['word LIKE ?',"#{word}"])
+      Word.find_by(['word LIKE ?',"#{word}"])
+      Word.create(word: word)
+    end
+end
+
+def associate_words_and_comment(words, comment)
+  words.each do |word|
+    WordComment.create(word_id: word.id, comment_id: comment.id)
+  end
+end
