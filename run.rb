@@ -11,6 +11,11 @@
   input_word = gets.chomp
   puts
 
+  years = [2006,2010]
+
+  #call on years in loop
+
+# def most_frequent_word_by_years(year)
   word = Word.find_by(word: input_word)
   associated_words_count = {}
 
@@ -40,11 +45,4 @@
   end
 
   puts "The most frequent word was: #{most_frequent_word[0]} with a count of #{most_frequent_word[1]}. Yay."
-
-  # word_object = Word.find_by(word: "#{word}")
-  # word_object.comments.each_with_index do |comment, index|
-  #   puts
-  #   puts "Comment: #{index+1}"
-  #   puts comment[:body]
-  #   puts
-  # end
+# end
