@@ -11,15 +11,19 @@
   input_word = gets.chomp
   puts
 
-  years = [2006,2010]
+  years = [[1136073600,1138751999], [1164931200,1167609599]]
 
-  #call on years in loop
 
-# def most_frequent_word_by_years(year)
+
+def most_frequent_word_by_years(year, input_word)
   word = Word.find_by(word: input_word)
   associated_words_count = {}
 
-  associated_words = word.comments.collect do |comment|
+  associated_comments = word.comments.select do |comment|
+    comment[:created_utc] >= year[0] && comment[:created_utc] <= year[-1]
+  end
+
+  associated_words = associated_comments.collect do |comment|
     filtered_words = comment.words.reject do |word_object|
       word_object.id == word.id
     end
@@ -44,5 +48,9 @@
     count
   end
 
-  puts "The most frequent word was: #{most_frequent_word[0]} with a count of #{most_frequent_word[1]}. Yay."
-# end
+  puts "The most frequent word for month was: #{most_frequent_word[0]} with a count of #{most_frequent_word[1]}. Yay."
+end
+
+years.each do |year|
+  most_frequent_word_by_years(year, input_word)
+end
