@@ -1,6 +1,6 @@
 
 require "json"
-require_relative '../db/stopwords.rb'
+# require_relative '../db/stopwords.rb'
 
 def find_or_create_by_entries_from_json(filename)
   File.open(filename).each do |line|
@@ -25,12 +25,19 @@ end
 
 def create_words_from_hash(comment_hash)
   raw_words = comment_hash["body"].split
-  words = raw_words.reject { |a| Stopwords.all.include?(a) }
-  find_or_create_by_word(words)
+  raw_words = raw_words.collect do |word|
+    word.downcase
+  end
+  # words = raw_words.reject { |a| Stopwords.all.include?(a) }
+
+  sieve = Stopwords::Snowball::WordSieve.new
+
+  filtered_words = sieve.filter(lang: :en, words: raw_words)
+  # filtered = ['guide', 'douglas', 'adams']
+  find_or_create_by_word(filtered_words)
 end
 
 def find_or_create_by_word(words)
-  #todo : filter stop words
   words.collect do |word|
     if Word.exists?(['word LIKE ?',"#{word}"])
       Word.find_by(['word LIKE ?',"#{word}"])

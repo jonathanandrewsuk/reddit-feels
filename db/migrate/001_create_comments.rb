@@ -4,7 +4,6 @@ class CreateComments < ActiveRecord::Migration
       t.text :body
       t.integer :created_utc
       t.string :author
-      # t.belongs_to :word_comment
       t.timestamps
     end
   end
