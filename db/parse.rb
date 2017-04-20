@@ -2,6 +2,21 @@
 require "json"
 require_relative '../db/filter.rb'
 
+# connect to Reddit API
+def find_or_create_by_entries_from_api()
+  session = Redd.it(
+    user_agent: '{}',
+    client_id:  '{}}',
+    secret:     '{}}',
+    username:   '{}}',
+    password:   '{}'
+  )
+
+  session.subreddit('all').comment_stream do |comment|
+    puts comment.body
+  end
+end
+
 def find_or_create_by_entries_from_json(filename)
   File.open(filename).each do |line|
     parse_json_line(line)
