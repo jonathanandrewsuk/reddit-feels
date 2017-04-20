@@ -6,9 +6,9 @@ require_relative '../db/filter.rb'
 def find_or_create_by_entries_from_api()
   session = Redd.it(
     user_agent: '{}',
-    client_id:  '{}}',
-    secret:     '{}}',
-    username:   '{}}',
+    client_id:  '{}',
+    secret:     '{}',
+    username:   '{}',
     password:   '{}'
   )
 
