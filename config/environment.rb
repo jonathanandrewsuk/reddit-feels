@@ -5,6 +5,7 @@ require 'yaml/store'
 require 'ostruct'
 require 'date'
 require 'pry'
+require 'catpix'
 
 
 include ActiveRecord::Tasks
