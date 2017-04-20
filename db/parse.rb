@@ -17,8 +17,8 @@ def find_or_create_by_entries_from_api()
   end
 end
 
-def find_or_create_by_entries_from_json(filename)
-  File.open(filename).each do |line|
+def find_or_create_by_entries_from_json(filename, lines_count=File.open(filename).size)
+  File.open(filename).take(lines_count).each do |line|
     parse_json_line(line)
   end
 end
