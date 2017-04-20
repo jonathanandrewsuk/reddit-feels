@@ -6,12 +6,14 @@
 
   include ActiveRecord::Tasks
 
+  a = Artii::Base.new :font => 'slant'
+  puts a.asciify('Reddit Feels')
+
   puts "Hello welcome to reddit feels!"
   puts "Please enter a word"
   input_word = gets.chomp
-  puts
 
-  years = [[1136073600,1138751999], [1164931200,1167609599]]
+  years = [[1136073600,1138751999], [1232409600,1232495999]]
 
 
 
@@ -40,17 +42,51 @@ def most_frequent_word_by_years(year, input_word)
     filtered_words
   end.flatten
 
-  # associated_words.each do |word|
-  #   puts word[:word]
-  # end
+
 
   most_frequent_word = associated_words_count.max_by do |word, count|
     count
   end
 
-  puts "The most frequent word for month was: #{most_frequent_word[0]} with a count of #{most_frequent_word[1]}. Yay."
+  before_after = ["before","after"]
+
+
+
+  puts "The most frequent word #{before_after[0]} was: #{most_frequent_word[0]} with a count of #{most_frequent_word[1]}."
+  a = Artii::Base.new :font => 'slant'
+  puts a.asciify("#{most_frequent_word[0]}")
+  before_after.unshift
 end
 
 years.each do |year|
   most_frequent_word_by_years(year, input_word)
+end
+
+
+puts "Did Obama do well? (Y/N)"
+input_word2 = gets.chomp
+require 'catpix'
+
+if input_word2 == "y" || input_word2 == "Y"
+
+Catpix::print_image "obama3.png",
+  :limit_x => 0.3,
+  :limit_y => 0,
+  :center_x => false,
+  :center_y => true,
+  :bg => "white",
+  :bg_fill => false,
+  :resolution => "high"
+  puts "Thanks Obama"
+
+else
+  Catpix::print_image "trump.png",
+    :limit_x => 0.3,
+    :limit_y => 0,
+    :center_x => false,
+    :center_y => true,
+    :bg => "white",
+    :bg_fill => false,
+    :resolution => "high"
+    puts "Thanks for nothing obama"
 end

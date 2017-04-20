@@ -1,3 +1,4 @@
 # ignore generated database files
 *.db
 *.sqlite
+db/reddit-json

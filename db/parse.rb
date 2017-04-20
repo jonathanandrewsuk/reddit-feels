@@ -3,7 +3,7 @@ require "json"
 require_relative '../db/filter.rb'
 
 def find_or_create_by_entries_from_json(filename)
-  File.open(filename).each do |line|
+  File.readlines(filename).sample(200).each do |line|  #.sample(200)
     parse_json_line(line)
   end
 end
