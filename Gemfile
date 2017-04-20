@@ -8,3 +8,5 @@ gem "pry"
 gem 'stopwords-filter', require: 'stopwords'
 gem 'artii'
 gem 'catpix'
+gem 'redd'
+gem 'require_all'

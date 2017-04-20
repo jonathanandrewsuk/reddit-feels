@@ -1,10 +1,7 @@
 
-
-
-  ENV["ACTIVE_RECORD_ENV"] ||= "development"
   require_relative './config/environment'
 
-  include ActiveRecord::Tasks
+
 
   a = Artii::Base.new :font => 'slant'
   puts a.asciify('Reddit Feels')
@@ -13,22 +10,26 @@
   puts "Please enter a word"
   input_word = gets.chomp
 
-  years = [[1136073600,1138751999], [1232409600,1232495999]]
+  years = [[1230768000,1233446399], [1483228800,1485907199]]
 
 
 
 def most_frequent_word_by_years(year, input_word)
   word = Word.find_by(word: input_word)
+  return nil if !word
+
   associated_words_count = {}
 
   associated_comments = word.comments.select do |comment|
     comment[:created_utc] >= year[0] && comment[:created_utc] <= year[-1]
   end
-
+#reject input word from array
   associated_words = associated_comments.collect do |comment|
     filtered_words = comment.words.reject do |word_object|
       word_object.id == word.id
     end
+
+    #
     filtered_words.each do |word|
       # if our word string isn't in our hash, put it in our hash with a count of one
       if !associated_words_count.keys.include?(word[:word])
@@ -48,18 +49,34 @@ def most_frequent_word_by_years(year, input_word)
     count
   end
 
-  before_after = ["before","after"]
+
+  #binding.pry
+  return nil if !most_frequent_word
 
 
-
-  puts "The most frequent word #{before_after[0]} was: #{most_frequent_word[0]} with a count of #{most_frequent_word[1]}."
+  puts "The most frequent word was: #{most_frequent_word[0]} with a count of #{most_frequent_word[1]}."
   a = Artii::Base.new :font => 'slant'
   puts a.asciify("#{most_frequent_word[0]}")
-  before_after.unshift
+  # before_after.unshift
+  most_frequent_word[0]
 end
 
-years.each do |year|
-  most_frequent_word_by_years(year, input_word)
+all_good = true
+
+while true
+  years.each do |year|
+    returned_word = most_frequent_word_by_years(year, input_word)
+    #binding.pry
+    if !returned_word
+      all_good = false
+      puts "Sorry, couldn't find that word for both years. Enter another word!"
+      input_word = gets.chomp
+      break
+    else
+      all_good = true
+    end
+  end
+  break if all_good
 end
 
 
@@ -88,5 +105,5 @@ else
     :bg => "white",
     :bg_fill => false,
     :resolution => "high"
-    puts "Thanks for nothing obama"
+    puts "Thanks for nothing Obama"
 end

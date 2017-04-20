@@ -2,11 +2,12 @@
 require "json"
 require_relative '../db/filter.rb'
 
-def find_or_create_by_entries_from_json(filename)
-  File.readlines(filename).sample(200).each do |line|  #.sample(200)
-    parse_json_line(line)
-  end
-end
+
+# def find_or_create_by_entries_from_json(filename)
+#   File.readlines(filename).sample(200).each do |line|  #.sample(200)
+#     parse_json_line(line)
+#   end
+# end
 
 def parse_json_line(line)
   comment_hash = JSON.parse(line)
@@ -52,5 +53,27 @@ end
 def associate_words_and_comment(words, comment)
   words.each do |word|
     WordComment.create(word_id: word.id, comment_id: comment.id)
+  end
+end
+
+
+# connect to Reddit API
+def find_or_create_by_entries_from_api()
+  session = Redd.it(
+    user_agent: '{}',
+    client_id:  '{}',
+    secret:     '{}',
+    username:   '{}',
+    password:   '{}'
+  )
+
+  session.subreddit('all').comment_stream do |comment|
+    puts comment.body
+  end
+end
+
+def find_or_create_by_entries_from_json(filename, lines_count=File.open(filename).size)
+  File.open(filename).take(lines_count).each do |line|
+    parse_json_line(line)
   end
 end

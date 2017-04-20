@@ -7,10 +7,13 @@ require 'date'
 require 'pry'
 
 
+include ActiveRecord::Tasks
+
 Bundler.require
 
 
 DBNAME = "word_associations"
+ENV["ACTIVE_RECORD_ENV"] ||= "development"
 
 Dir[File.join(File.dirname(__FILE__), "../app/models", "*.rb")].each {|f| require f}
 Dir[File.join(File.dirname(__FILE__), "../lib/support", "*.rb")].each {|f| require f}
