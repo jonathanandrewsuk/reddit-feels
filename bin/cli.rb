@@ -1,16 +1,15 @@
 
-def cli_input
+def cli_welcome
   a = Artii::Base.new :font => 'slant'
-  puts a.asciify('Reddit Feels')
+  puts a.asciify('Reddit Feels').colorize(:red)
 
   puts "Hello welcome to reddit feels!"
   puts "Please enter a word"
-  input_word = gets.chomp
-  #binding.pry
-  input_word
 end
 
+
 def cli_results(most_frequent_word)
+  puts
   puts "The most frequent word was: #{most_frequent_word[0]} with a count of #{most_frequent_word[1]}."
   a = Artii::Base.new :font => 'slant'
   puts a.asciify("#{most_frequent_word[0]}")
@@ -24,6 +23,7 @@ def did_obama_do_well
   else
     print_picture("trump.png", "Thanks for NOTHING Obama")
   end
+  go_again
 end
 
 
@@ -37,4 +37,19 @@ def print_picture(image, message)
     :bg_fill => false,
     :resolution => "high"
     puts message
+    puts
+end
+
+def go_again
+  puts "Would you like another go? (Y/N)"
+  decision = gets.chomp
+  if decision == "y" || decision == "Y"
+    run
+  else
+    puts
+    puts "Keep the change, ya filthy animal.".colorize(:red)
+    puts
+  end
+
+
 end

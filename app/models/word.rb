@@ -24,13 +24,14 @@ class Word < ActiveRecord::Base
           all_good = false
           puts "Sorry, couldn't find that word for both years. Enter another word!"
           ####BREAK THIS OUT###
-          input_word = gets.chomp
-          break
+          returned_word = self.class.find_word_by_string.find_related_word_for_years(years)
+          #binding.pry
+          return true if !!returned_word
         else
           all_good = true
         end
       end
-      break if all_good
+      return true if all_good
     end
   end
 
@@ -70,6 +71,16 @@ class Word < ActiveRecord::Base
     most_frequent_word = word_count.max_by do |word, count|
       count
     end
+  end
+
+
+  def self.find_word_by_string
+    input_word = nil
+    while input_word == nil
+      input_word = self.find_by(word: gets.chomp) ##### fix this, it's baaaaaad
+    end
+    input_word
+    #binding.pry
   end
 
 end

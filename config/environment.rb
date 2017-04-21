@@ -6,6 +6,7 @@ require 'ostruct'
 require 'date'
 require 'pry'
 require 'catpix'
+require 'colorize'
 
 
 include ActiveRecord::Tasks

@@ -10,3 +10,4 @@ gem 'artii'
 gem 'catpix'
 gem 'redd'
 gem 'require_all'
+gem "colorize"
