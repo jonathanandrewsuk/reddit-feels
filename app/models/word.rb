@@ -5,7 +5,7 @@ class Word < ActiveRecord::Base
   def most_frequent_word_by_year(year)
     word = Word.find_by(word: self.word)
     return nil if !word
-    comments = get_associated_comments(word,year)
+    comments = get_associated_comments(word, year)
     words = reject_input_word(year)
     word_count = get_word_count(words)
     most_frequent_word = get_most_frequent_word(word_count)
@@ -23,7 +23,7 @@ class Word < ActiveRecord::Base
         if !returned_word
           all_good = false
           puts "Sorry, couldn't find that word for both years. Enter another word!"
-          ####BREAK THIS OUT###
+          # get another word and (recursively) call this method again
           returned_word = self.class.find_word_by_string.find_related_word_for_years(years)
           return true if !!returned_word
         else
@@ -41,12 +41,14 @@ class Word < ActiveRecord::Base
   end
 
   def reject_input_word(year)
+    # filter by timestamp
     comments_from_year = self.comments.select do |comment|
       comment[:created_utc] > year[0] && comment[:created_utc] < year[-1]
     end
     words = comments_from_year.collect do |comment|
       comment.words
     end.flatten
+    # return words that aren't self
     words.reject do |word|
       word.id == self.id
     end
@@ -74,7 +76,7 @@ class Word < ActiveRecord::Base
 
   def self.find_word_by_string
     while true
-      input_word = self.find_by(word: gets.chomp) ##### fix this, it's baaaaaad
+      input_word = self.find_by(word: gets.chomp)
       if !input_word
         puts "Couldn't find that word, try another"
       else
