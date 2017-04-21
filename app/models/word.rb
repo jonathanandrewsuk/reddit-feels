@@ -5,7 +5,7 @@ class Word < ActiveRecord::Base
   def most_frequent_word_by_year(year, index)
     word = Word.find_by(word: self.word)
     return nil if !word
-    comments = get_associated_comments(word, year)
+    get_associated_comments(word, year)
     words = reject_input_word(year)
     word_count = get_word_count(words)
     most_frequent_word = get_most_frequent_word(word_count)
@@ -35,7 +35,7 @@ class Word < ActiveRecord::Base
   end
 
   def get_associated_comments(word,year)
-    associated_comments = word.comments.select do |comment|
+    word.comments.select do |comment|
       comment[:created_utc] >= year[0] && comment[:created_utc] <= year[-1]
     end
   end
@@ -69,7 +69,7 @@ class Word < ActiveRecord::Base
   end
 
   def get_most_frequent_word(word_count)
-    most_frequent_word = word_count.max_by do |word, count|
+    word_count.max_by do |word, count|
       count
     end
   end
