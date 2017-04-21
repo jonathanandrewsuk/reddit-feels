@@ -2,6 +2,7 @@ require_relative './parse.rb'
 
 filenames = ['./db/reddit-json/RC_2009-01', './db/reddit-json/RC_2017-01']
 
+
 count = 6000
 
 filenames.each do |filename|

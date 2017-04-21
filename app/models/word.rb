@@ -25,7 +25,6 @@ class Word < ActiveRecord::Base
           puts "Sorry, couldn't find that word for both years. Enter another word!"
           ####BREAK THIS OUT###
           returned_word = self.class.find_word_by_string.find_related_word_for_years(years)
-          #binding.pry
           return true if !!returned_word
         else
           all_good = true
@@ -56,7 +55,7 @@ class Word < ActiveRecord::Base
   def get_word_count(words)
     word_count = {}
     words.each do |word|
-      # if our word string isn't in our hash, put it in our hash with a count of one
+      # if our word string isn't in our hash, put it in with a count of one
       if !word_count.keys.include?(word[:word])
         word_count[word[:word]] = 1
       # otherwise increment the count in our hash at the word string key
@@ -73,9 +72,7 @@ class Word < ActiveRecord::Base
     end
   end
 
-
   def self.find_word_by_string
-    #input_word = nil
     while true
       input_word = self.find_by(word: gets.chomp) ##### fix this, it's baaaaaad
       if !input_word
@@ -85,7 +82,5 @@ class Word < ActiveRecord::Base
       end
     end
     input_word
-    #binding.pry
   end
-
 end
