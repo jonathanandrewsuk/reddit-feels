@@ -8,9 +8,10 @@ def cli_welcome
 end
 
 
-def cli_results(most_frequent_word)
+def cli_results(most_frequent_word, index)
+  before_after = ["before", "after"]
   puts ""
-  puts "The most frequent word was: #{most_frequent_word[0]} with a count of #{most_frequent_word[1]}."
+  puts "The most frequent word #{before_after[index]} Obama was: #{most_frequent_word[0]} with a count of #{most_frequent_word[1]}."
   a = Artii::Base.new :font => 'slant'
   puts a.asciify("#{most_frequent_word[0]}")
 end

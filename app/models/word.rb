@@ -2,7 +2,7 @@ class Word < ActiveRecord::Base
   has_many :word_comments
   has_many :comments, through: :word_comments
 
-  def most_frequent_word_by_year(year)
+  def most_frequent_word_by_year(year, index)
     word = Word.find_by(word: self.word)
     return nil if !word
     comments = get_associated_comments(word, year)
@@ -10,7 +10,7 @@ class Word < ActiveRecord::Base
     word_count = get_word_count(words)
     most_frequent_word = get_most_frequent_word(word_count)
     return nil if !most_frequent_word
-    cli_results(most_frequent_word)
+    cli_results(most_frequent_word, index)
     most_frequent_word[0]
   end
 
@@ -18,8 +18,8 @@ class Word < ActiveRecord::Base
     all_good = true
 
     while true
-      years.each do |year|
-        returned_word = most_frequent_word_by_year(year)
+      years.each_with_index do |year, index|
+        returned_word = most_frequent_word_by_year(year, index)
         if !returned_word
           all_good = false
           puts "Sorry, couldn't find that word for both years. Enter another word!"
