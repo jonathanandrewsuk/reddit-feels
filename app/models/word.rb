@@ -75,9 +75,14 @@ class Word < ActiveRecord::Base
 
 
   def self.find_word_by_string
-    input_word = nil
-    while input_word == nil
+    #input_word = nil
+    while true
       input_word = self.find_by(word: gets.chomp) ##### fix this, it's baaaaaad
+      if !input_word
+        puts "Couldn't find that word, try another"
+      else
+        break
+      end
     end
     input_word
     #binding.pry
