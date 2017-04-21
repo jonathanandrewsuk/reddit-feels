@@ -9,7 +9,7 @@ end
 
 
 def cli_results(most_frequent_word)
-  puts
+  puts ""
   puts "The most frequent word was: #{most_frequent_word[0]} with a count of #{most_frequent_word[1]}."
   a = Artii::Base.new :font => 'slant'
   puts a.asciify("#{most_frequent_word[0]}")
@@ -18,7 +18,7 @@ end
 def did_obama_do_well
   puts "Did Obama do well? (Y/N)"
   decision = gets.chomp
-  if decision == "y" || decision == "Y"
+  if decision.downcase == "y"
     print_picture("obama.png", "Thanks Obama")
   else
     print_picture("trump.png", "Thanks for NOTHING Obama")
@@ -37,19 +37,17 @@ def print_picture(image, message)
     :bg_fill => false,
     :resolution => "high"
     puts message
-    puts
+    puts ""
 end
 
 def go_again
   puts "Would you like another go? (Y/N)"
   decision = gets.chomp
-  if decision == "y" || decision == "Y"
+  if decision.downcase == "y"
     run
   else
-    puts
+    puts ""
     puts "Keep the change, ya filthy animal.".colorize(:red)
-    puts
+    puts ""
   end
-
-
 end
