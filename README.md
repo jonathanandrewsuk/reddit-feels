@@ -4,9 +4,9 @@ A command line application to play word association with a database of reddit co
 
 ## Video Demo
 
-[![VIDEO](https://img.youtube.com/vi/pITLn_YlGUU/0.jpg)](https://www.youtube.com/watch?v=zrgjvtpyZwk)
+[![VIDEO](https://s10.postimg.org/b2h98xdwp/Screen_Shot_2017-04-22_at_10.10.17.png)](https://www.youtube.com/watch?v=zrgjvtpyZwk)
 
-Click [here](https://www.youtube.com/watch?v=zrgjvtpyZwk) to view the application running!
+Click [here](https://www.youtube.com/watch?v=zrgjvtpyZwk) to view the application up'n running.
 
 This version has been modified to deal with the first and last month of Barack Obamas time in office, but could easily be changed to other scenarios.
 
